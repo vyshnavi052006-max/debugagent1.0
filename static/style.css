@@ -1,0 +1,364 @@
+/* ============================================================
+   DebugMate -- design tokens
+   Color:  bg #0B0E14 | panel #11151C | panel-alt #161B22
+           accent (mint terminal green) #5CF2A0 | accent-amber #FFB454
+           text #C9D1D9 | muted #6E7681 | error #FF6B6B | border #20262E
+   Type:   Display/code -> JetBrains Mono | Body/prose -> Inter
+   Signature: chat responses render as numbered "stack frames",
+              echoing a real Python traceback, since the agent's whole
+              job is reading tracebacks.
+   ============================================================ */
+
+:root {
+  --bg: #0B0E14;
+  --panel: #11151C;
+  --panel-alt: #161B22;
+  --border: #20262E;
+  --text: #C9D1D9;
+  --muted: #6E7681;
+  --accent: #5CF2A0;
+  --accent-dim: #2E5C46;
+  --amber: #FFB454;
+  --error: #FF6B6B;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+textarea, button, input { font-family: inherit; }
+
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  overflow-y: auto;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand-mark {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--accent);
+  background: var(--panel-alt);
+  border: 1px solid var(--accent-dim);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.brand-text h1 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 19px;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.domain-tag {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--amber);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.agent-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0;
+}
+
+.agent-desc strong { color: var(--accent); font-weight: 600; }
+
+.status-label {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.status-block, .memory-block, .examples-block {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+}
+
+.status-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+.status-dot.planning { background: var(--amber); animation: pulse 1s infinite ease-in-out; }
+.status-dot.executing { background: #5CC8F2; animation: pulse 0.6s infinite ease-in-out; }
+.status-dot.done { background: var(--accent); }
+.status-dot.error { background: var(--error); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.memory-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 12.5px;
+}
+
+.memory-list li {
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: var(--text);
+}
+
+.memory-list li span.k { color: var(--accent); font-family: "JetBrains Mono", monospace; font-size: 11px; }
+.memory-empty { color: var(--muted) !important; font-style: italic; }
+
+.examples-block { display: flex; flex-direction: column; gap: 8px; }
+
+.example-btn {
+  text-align: left;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.example-btn:hover {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+/* ===================== MAIN ===================== */
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-width: 0;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.dots { display: flex; gap: 6px; }
+.dots span {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--border);
+}
+.dots span:nth-child(1) { background: #FF6B6B; }
+.dots span:nth-child(2) { background: #FFB454; }
+.dots span:nth-child(3) { background: #5CF2A0; }
+
+.terminal-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.msg { max-width: 760px; }
+.msg.user { align-self: flex-end; max-width: 640px; }
+
+.msg-meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.msg.user .msg-meta { text-align: right; color: var(--amber); }
+
+.msg-body {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.msg.user .msg-body {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: #EAFBF1;
+}
+
+.msg-body code, .msg-body pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+}
+
+.msg-body pre {
+  background: #060809;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+}
+
+/* ---- Signature element: traceback-style step frames ---- */
+.trace {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.trace-header {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-alt);
+}
+
+.frame {
+  padding: 10px 16px;
+  border-bottom: 1px dashed var(--border);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.frame:last-child { border-bottom: none; }
+
+.frame-loc {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.frame-loc .step-num { color: var(--amber); }
+
+.frame-body { color: var(--text); white-space: pre-wrap; }
+.frame-body pre { margin: 6px 0 0; }
+
+.refusal {
+  border-left: 3px solid var(--amber);
+  padding-left: 12px;
+}
+
+/* ===================== COMPOSER ===================== */
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.prompt-glyph {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--accent);
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+#message-input {
+  flex: 1;
+  resize: none;
+  max-height: 160px;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 13.5px;
+  font-family: "JetBrains Mono", monospace;
+  line-height: 1.5;
+}
+
+#message-input:focus { outline: none; border-color: var(--accent-dim); }
+
+#send-btn {
+  background: var(--accent);
+  color: #06140C;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: "JetBrains Mono", monospace;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+#send-btn:hover { filter: brightness(1.1); }
+#send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 40vh; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .status-dot.planning, .status-dot.executing { animation: none; }
+}

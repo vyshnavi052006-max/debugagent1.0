@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DebugMate &mdash; Code Debugging Agent</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128027;</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">&gt;_</div>
+      <div class="brand-text">
+        <h1>DebugMate</h1>
+        <p class="domain-tag">Code Debugging Agent</p>
+      </div>
+    </div>
+
+    <p class="agent-desc">
+      I plan, run, and explain fixes &mdash; autonomously. Send me an error message
+      or a broken snippet and I'll <strong>analyze</strong> it, <strong>diagnose</strong> the
+      root cause, <strong>generate a fix</strong>, <strong>execute it in a live sandbox</strong>,
+      then <strong>explain</strong> what happened. I stay in my lane: debugging only.
+    </p>
+
+    <div class="status-block">
+      <span class="status-label">agent.status</span>
+      <div class="status-row" id="status-row">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">idle</span>
+      </div>
+    </div>
+
+    <div class="memory-block">
+      <span class="status-label">agent.memory</span>
+      <ul id="memory-list" class="memory-list">
+        <li class="memory-empty">No memory yet &mdash; send your first bug report.</li>
+      </ul>
+    </div>
+
+    <div class="examples-block">
+      <span class="status-label">try_an_example()</span>
+      <button class="example-btn" data-msg="My Python function keeps throwing IndexError: list index out of range when I loop through my list:&#10;```python&#10;def get_last_three(items):&#10;    result = []&#10;    for i in range(1, 4):&#10;        result.append(items[len(items) - i])&#10;    return result&#10;&#10;print(get_last_three([1, 2]))&#10;```">Fix my Python IndexError</button>
+      <button class="example-btn" data-msg="This JS function returns NaN instead of the sum:&#10;```javascript&#10;function sumAll(nums) {&#10;  let total;&#10;  for (let n of nums) {&#10;    total += n;&#10;  }&#10;  return total;&#10;}&#10;console.log(sumAll([1,2,3]));&#10;```">Debug a JavaScript NaN bug</button>
+      <button class="example-btn" data-msg="My Java program throws ArrayIndexOutOfBoundsException:&#10;```java&#10;public class Main {&#10;  public static void main(String[] args) {&#10;    int[] arr = {1,2,3};&#10;    for (int i = 0; i <= arr.length; i++) {&#10;      System.out.println(arr[i]);&#10;    }&#10;  }&#10;}&#10;```">Explain a Java ArrayIndex bug</button>
+      <button class="example-btn" data-msg="What's the best pizza topping?">Ask an off-topic question</button>
+    </div>
+
+    <footer class="sidebar-footer">
+      Shiva Patel &middot; Built for GENAI Internship &mdash; Milestone 2
+    </footer>
+  </aside>
+
+  <!-- ===================== MAIN CHAT ===================== -->
+  <main class="main">
+    <div class="terminal-bar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <span class="terminal-title">debugmate &mdash; session</span>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+      <div class="msg agent">
+        <div class="msg-meta">DebugMate</div>
+        <div class="msg-body">
+          Hey, I'm <strong>DebugMate</strong>. Paste a code snippet (in a \`\`\`fenced block\`\`\`)
+          and/or describe the error, and I'll plan a fix, run it for real, and explain it.
+          Try one of the examples on the left, or type your own below.
+        </div>
+      </div>
+    </div>
+
+    <form class="composer" id="composer">
+      <span class="prompt-glyph">$</span>
+      <textarea id="message-input" placeholder="Paste your error or code here... (Shift+Enter for newline)" rows="1"></textarea>
+      <button type="submit" id="send-btn">Run</button>
+    </form>
+  </main>
+
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
