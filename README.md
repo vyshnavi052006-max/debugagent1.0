@@ -128,4 +128,4 @@ debugmate/
 
 ## Author
 
-Shiva Patel &mdash; Built for GENAI Internship &mdash; Milestone 2
+V Vyshnavi &mdash; Built for GENAI Internship &mdash; Milestone 2
