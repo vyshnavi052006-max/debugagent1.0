@@ -13,7 +13,7 @@ strictly inside its assigned domain and politely declines anything that
 isn't about code/debugging.
 
 - **Domain:** Code Debugging
-- **Author:** Shiva Patel
+- **Author:** V Vyshnavi
 
 ## Agent Capabilities
 
